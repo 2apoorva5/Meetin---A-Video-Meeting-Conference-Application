@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Meetin\'</string>
+    <string name="app_slogan">\'Cuz Every Moment Counts!</string>
+    <string name="powered_by">Powered by</string>
+    <string name="developer_depository">Developer Depository</string>
+
+    <!-- OnBoarding Screen Strings -->
+
+    <string name="get_started_btn_text">Get Started</string>
+    <string name="onboarding_title1">Instant Setup</string>
+    <string name="onboarding_title2">Everywhere Together</string>
+    <string name="onboarding_title3">Instant Messaging</string>
+    <string name="onboarding_title4">Schedule Meetings</string>
+    <string name="onboarding_desc1">Setup or join a video meeting or conference instantly.</string>
+    <string name="onboarding_desc2">Enjoy high quality audio &amp; video anywhere and stay in touch.</string>
+    <string name="onboarding_desc3">Stay connected with instant messaging in between the meeting.</string>
+    <string name="onboarding_desc4">Schedule your meetings and conferences with ease.</string>
+
+    <!-- Welcome Screen Strings -->
+
+    <string name="privacy_policies">Privacy Policies</string>
+    <string name="login_with_email_btn_text">Login with email</string>
+    <string name="create_new_account_btn_text">Create new account</string>
+    <string name="welcome_desc">Setup or join a video meeting or conference instantly with no hassle.</string>
+
+    <!-- Sign Up & Login Screen Strings -->
+
+    <string name="name_hint">Name*</string>
+    <string name="email_hint">Email*</string>
+    <string name="mobile_hint">Mobile*</string>
+    <string name="create_password_hint">Create Password*</string>
+    <string name="confirm_password_hint">Confirm Password*</string>
+    <string name="username_hint">Username*</string>
+    <string name="about_hint">About (Optional)</string>
+    <string name="email_or_mobile_hint">Email or Mobile*</string>
+    <string name="password_hint">Password*</string>
+    <string name="sign_in_title">Get Started!</string>
+    <string name="sign_in_subtitle">Sign in to continue.</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in_btn_text">Sign In</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_up_title">Create Account!</string>
+    <string name="sign_up_subtitle">Sign up to get started.</string>
+    <string name="sign_up_btn_text">Sign Up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="next_btn_text">Next</string>
+    <string name="set_username_title">Complete profile!</string>
+    <string name="set_username_subtitle">Set your username below.</string>
+
+    <!-- Verify OTP Screen Strings -->
+
+    <string name="verify_otp_title">Verify your phone!</string>
+    <string name="verify_otp_subtitle">Enter below the verification code (OTP) sent to +919915462971.</string>
+    <string name="resend_otp_btn_text">Resend OTP</string>
+    <string name="verify_btn_text">Verify</string>
+
+    <!-- Forgot Password Screen Strings -->
+
+    <string name="forgot_your_title">Forgot your password?</string>
+    <string name="forgot_password_subtitle">Enter below the registered email &amp; get a password reset link on that.</string>
+    <string name="send_btn_text">Send</string>
+
+    <!-- Home Screen Strings -->
+
+    <string name="home_subtitle">Setup or join a&#160;</string>
+    <string name="incoming_meeting_invitation">Incoming Meeting Invitation</string>
+    <string name="sending_meeting_invitation">Sending Meeting Invitation</string>
+    <string name="search_user_hint">Search user</string>
+
+</resources>

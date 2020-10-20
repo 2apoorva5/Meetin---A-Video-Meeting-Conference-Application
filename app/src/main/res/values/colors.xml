@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#17A0DB</color>
+    <color name="colorPrimaryDark">#00B2FF</color>
+    <color name="colorAccent">#FB6C6D</color>
+
+    <color name="colorBackground">@android:color/white</color>
+    <color name="colorMeetingInvitationStart">#17A0DB</color>
+    <color name="colorMeetingInvitationEnd">#FB6C6D</color>
+
+    <color name="otpViewColor">#4017A0DB</color>
+
+    <color name="errorColor">#B71C1C</color>
+    <color name="infoColor">#0F4C81</color>
+    <color name="successColor">#4CAF50</color>
+    <color name="colorInactive">#BDBDBD</color>
+    <color name="colorSelectedItem">#2617A0DB</color>
+    <color name="colorAccept">#4CAF50</color>
+    <color name="colorReject">#F44336</color>
+
+    <color name="colorIconDark">@android:color/black</color>
+    <color name="colorIconLight">@android:color/white</color>
+    <color name="colorTextDark">@android:color/black</color>
+    <color name="colorTextLight">@android:color/white</color>
+
+
+    <!--ImageChooser and Cropper Activity-->
+    <color name="dialog_choose_icon_color">#17A0DB</color>
+    <color name="dialog_choose_text_color">#000000</color>
+    <color name="ucrop_color_toolbar">#17A0DB</color>
+    <color name="ucrop_color_statusbar">#17A0DB</color>
+    <color name="ucrop_color_widget_active">#17A0DB</color>
+    <color name="ucrop_color_toolbar_widget">#000000</color>
+    <color name="ucrop_color_active_controls_color">#17A0DB</color>
+    <color name="ucrop_color_inactive_controls_color">#BDBDBD</color>
+    <color name="ucrop_color_widget_rotate_mid_line">#17A0DB</color>
+    <color name="ucrop_color_active_aspect_ratio">#17A0DB</color>
+    <color name="ucrop_color_widget_text">#17A0DB</color>
+
+</resources>
