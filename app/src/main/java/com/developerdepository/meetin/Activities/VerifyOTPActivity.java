@@ -24,8 +24,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.developerdepository.meetin.R;
 import com.developerdepository.meetin.Utilities.Constants;
 import com.developerdepository.meetin.Utilities.PreferenceManager;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthCredential;
@@ -275,7 +273,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 mobile,
                 60,
                 TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
+                VerifyOTPActivity.this,
                 mCallbacks
         );
     }
@@ -285,7 +283,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 mobile,
                 60,
                 TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
+                VerifyOTPActivity.this,
                 mCallbacks, resendingToken);
     }
 
