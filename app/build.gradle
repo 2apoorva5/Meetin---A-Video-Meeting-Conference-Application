@@ -3,7 +3,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.3"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -39,7 +39,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Google Material Design
-    implementation 'com.google.android.material:material:1.3.0-alpha04'
+    implementation 'com.google.android.material:material:1.3.0-rc01'
 
     //SwipeRefreshLayout Library
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -62,8 +62,8 @@ dependencies {
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
 
     //View Animation Library
-    implementation 'com.daimajia.easing:library:2.0@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation 'com.daimajia.easing:library:2.4@aar'
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
 
     //KeyboardVisibilityEvent Library
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
@@ -81,7 +81,7 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
 
     //CircleImageView Library
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //Picasso Library
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -94,17 +94,17 @@ dependencies {
     implementation 'com.github.dhaval2404:imagepicker:1.7.1'
 
     //Kotlin Standard Library
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.20"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
 
     //Firebase Authentication
-    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-auth:20.0.2'
 
     //Firebase Cloud Messaging
-    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
 
     //Firebase Cloud Firestore Database
-    implementation 'com.google.firebase:firebase-firestore:22.0.0'
+    implementation 'com.google.firebase:firebase-firestore:22.0.1'
 
     //Firebase Storage
-    implementation 'com.google.firebase:firebase-storage:19.2.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
 }
