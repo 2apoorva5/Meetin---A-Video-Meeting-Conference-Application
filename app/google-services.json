@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "729840638622",
+    "firebase_url": "https://meetin-2501.firebaseio.com",
+    "project_id": "meetin-2501",
+    "storage_bucket": "meetin-2501.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729840638622:android:0dd5d937c931af981df98f",
+        "android_client_info": {
+          "package_name": "com.developerdepository.meetin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729840638622-0i755a2a9mcfdlsv94mv8sbf56cdrt4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developerdepository.meetin",
+            "certificate_hash": "ac2c98b7df13c7db35df6c311d33b433130677d7"
+          }
+        },
+        {
+          "client_id": "729840638622-ivos45j54l904pmplr10hac2hig051t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqO5YC4mHqisGn2WiJYhXhWfqFdNG57po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729840638622-ivos45j54l904pmplr10hac2hig051t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
