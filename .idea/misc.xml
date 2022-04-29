@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable-xhdpi/ic_search.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/background_meeting_invitation.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/background_meeting_invitation_user.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/background_selected_user.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/background_user.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/foreground_welcome.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_accept.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_back.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_camera_lens.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_close.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_conference.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_dialog_camera.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_dialog_cancel.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_dialog_connect.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_dialog_yes.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_edit.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_email.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_error.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_info.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_mobile.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_next.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_password.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_reject.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_search.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/ic_user.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_forgot_password.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_login.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_onboarding1.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_set_username.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_signup.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_user_avatar.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/illustration_verify_otp.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/drawable/pattern1.xml" value="0.1605" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_forgot_password.xml" value="0.176" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_incoming_invitation.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_main.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_onboard.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_outgoing_invitation.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_set_username.xml" value="0.176" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_sign_in.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_sign_up.xml" value="0.16" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_splash_screen.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_verify_otp.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/activity_welcome.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/dialog_progress.xml" value="0.176" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/layout_item_container_user.xml" value="0.15472972972972973" />
+        <entry key="..\:/Users/apoor/AndroidStudioProjects/Meetin/app/src/main/res/layout/layout_onboarding_slider.xml" value="0.15472972972972973" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

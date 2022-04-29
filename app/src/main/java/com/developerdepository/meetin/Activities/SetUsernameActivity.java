@@ -1,5 +1,6 @@
 package com.developerdepository.meetin.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,13 +32,13 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.tapadoo.alerter.Alerter;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import maes.tech.intentanim.CustomIntent;
 
 public class SetUsernameActivity extends AppCompatActivity {
@@ -344,12 +345,13 @@ public class SetUsernameActivity extends AppCompatActivity {
     }
 
     private boolean isConnectedToInternet(SetUsernameActivity setUsernameActivity) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) setUsernameActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) setUsernameActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+        if (null != networkInfo &&
+                (networkInfo.getType() == ConnectivityManager.TYPE_WIFI || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE)) {
             return true;
         } else {
             return false;

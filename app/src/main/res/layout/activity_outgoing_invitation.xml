@@ -13,11 +13,11 @@
         android:layout_height="56dp"
         android:layout_marginTop="96dp"
         android:scaleType="centerCrop"
-        android:tint="@color/colorIconLight"
         android:contentDescription="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/colorIconLight" />
 
     <TextView
         android:id="@+id/text_sending_meeting_invitation"
@@ -150,12 +150,12 @@
                 android:layout_height="40dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_reject"
-                android:tint="@color/colorIconLight"
                 android:contentDescription="@string/app_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorIconLight" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

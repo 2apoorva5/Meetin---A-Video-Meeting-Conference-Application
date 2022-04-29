@@ -1,10 +1,5 @@
 package com.developerdepository.meetin.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.bumptech.glide.Glide;
 import com.developerdepository.meetin.Models.User;
 import com.developerdepository.meetin.Network.ApiClient;
@@ -24,11 +24,7 @@ import com.developerdepository.meetin.Network.ApiService;
 import com.developerdepository.meetin.R;
 import com.developerdepository.meetin.Utilities.Constants;
 import com.developerdepository.meetin.Utilities.PreferenceManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -88,17 +84,17 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
         meetingType = getIntent().getStringExtra("type");
 
-        if(meetingType != null) {
-            if(meetingType.equals("video")) {
+        if (meetingType != null) {
+            if (meetingType.equals("video")) {
                 imageMeetingType.setImageResource(R.drawable.ic_video_call);
-            } else if(meetingType.equals("audio")) {
+            } else if (meetingType.equals("audio")) {
                 imageMeetingType.setImageResource(R.drawable.ic_voice_call);
             }
         }
 
         user = (User) getIntent().getSerializableExtra("user");
-        if(user != null) {
-            if(user.Image != null && user.Image.length() != 0 && !user.Image.isEmpty() && !user.Image.equals("")) {
+        if (user != null) {
+            if (user.Image != null && user.Image.length() != 0 && !user.Image.isEmpty() && !user.Image.equals("")) {
                 userNameFirstChar.setVisibility(View.INVISIBLE);
                 userProfilePic.setVisibility(View.VISIBLE);
                 Glide.with(OutgoingInvitationActivity.this).load(Uri.parse(user.Image)).centerCrop().into(userProfilePic);
@@ -113,27 +109,31 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             userEmail.setText(user.Email);
         }
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
-            if(task.isSuccessful() && task.getResult() != null) {
-                inviterToken = task.getResult().getToken();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        inviterToken = task.getResult();
 
-                if(meetingType != null) {
-                    if(getIntent().getBooleanExtra("isMultiple", false)) {
-                        Type type = new TypeToken<ArrayList<User>>(){}.getType();
-                        ArrayList<User> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
-                        if(receivers != null) {
-                            totalReceivers = receivers.size();
+                        if (meetingType != null) {
+                            if (getIntent().getBooleanExtra("isMultiple", false)) {
+                                Type type = new TypeToken<ArrayList<User>>() {
+                                }.getType();
+                                ArrayList<User> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
+                                if (receivers != null) {
+                                    totalReceivers = receivers.size();
+                                }
+                                initiateMeeting(meetingType, null, receivers);
+                            } else {
+                                if (user != null) {
+                                    totalReceivers = 1;
+                                    initiateMeeting(meetingType, user.FCMToken, null);
+                                }
+                            }
                         }
-                        initiateMeeting(meetingType, null, receivers);
                     } else {
-                        if(user != null) {
-                            totalReceivers = 1;
-                            initiateMeeting(meetingType, user.FCMToken, null);
-                        }
+                        Toast.makeText(OutgoingInvitationActivity.this, "Some ERROR occurred!", Toast.LENGTH_SHORT).show();
                     }
-                }
-            }
-        });
+                });
     }
 
     private void initViews() {
@@ -148,12 +148,13 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
     private void setActionOnViews() {
         stopBtn.setOnClickListener(view -> {
-            if(getIntent().getBooleanExtra("isMultiple", false)) {
-                Type type = new TypeToken<ArrayList<User>>(){}.getType();
+            if (getIntent().getBooleanExtra("isMultiple", false)) {
+                Type type = new TypeToken<ArrayList<User>>() {
+                }.getType();
                 ArrayList<User> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
                 cancelInvitation(null, receivers);
             } else {
-                if(user != null) {
+                if (user != null) {
                     cancelInvitation(user.FCMToken, null);
                 }
             }
@@ -165,13 +166,13 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
             JSONArray tokens = new JSONArray();
 
-            if(receiverToken != null) {
+            if (receiverToken != null) {
                 tokens.put(receiverToken);
             }
 
-            if(receivers != null && receivers.size() > 0) {
+            if (receivers != null && receivers.size() > 0) {
                 StringBuilder userNames = new StringBuilder();
-                for(int i = 0; i < receivers.size(); i++) {
+                for (int i = 0; i < receivers.size(); i++) {
                     tokens.put(receivers.get(i).FCMToken);
                     userNames.append(receivers.get(i).Name).append("\n");
                 }
@@ -215,10 +216,10 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         ).enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if(response.isSuccessful()) {
-                    if(type.equals(Constants.REMOTE_MSG_INVITATION)) {
+                if (response.isSuccessful()) {
+                    if (type.equals(Constants.REMOTE_MSG_INVITATION)) {
                         Toast.makeText(OutgoingInvitationActivity.this, "Invitation Sent Successfully!", Toast.LENGTH_SHORT).show();
-                    } else if(type.equals(Constants.REMOTE_MSG_INVITATION_RESPONSE)) {
+                    } else if (type.equals(Constants.REMOTE_MSG_INVITATION_RESPONSE)) {
                         Toast.makeText(OutgoingInvitationActivity.this, "Invitation Cancelled!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -241,12 +242,12 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
             JSONArray tokens = new JSONArray();
 
-            if(receiverToken != null) {
+            if (receiverToken != null) {
                 tokens.put(receiverToken);
             }
 
-            if(receivers != null && receivers.size() > 0) {
-                for(User user : receivers) {
+            if (receivers != null && receivers.size() > 0) {
+                for (User user : receivers) {
                     tokens.put(user.FCMToken);
                 }
             }
@@ -272,15 +273,15 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
-            if(type != null) {
-                if(type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)) {
+            if (type != null) {
+                if (type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)) {
                     try {
                         URL serverURL = new URL("https://meet.jit.si");
                         JitsiMeetConferenceOptions.Builder builder = new JitsiMeetConferenceOptions.Builder();
                         builder.setServerURL(serverURL);
                         builder.setWelcomePageEnabled(false);
                         builder.setRoom(meetingRoom);
-                        if(meetingType.equals("audio")) {
+                        if (meetingType.equals("audio")) {
                             builder.setVideoMuted(true);
                             builder.setAudioOnly(true);
                         }
@@ -290,9 +291,9 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                         Toast.makeText(OutgoingInvitationActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                         finish();
                     }
-                } else if(type.equals(Constants.REMOTE_MSG_INVITATION_REJECTED)) {
+                } else if (type.equals(Constants.REMOTE_MSG_INVITATION_REJECTED)) {
                     rejectionCount += 1;
-                    if(rejectionCount == totalReceivers) {
+                    if (rejectionCount == totalReceivers) {
                         Toast.makeText(context, "Invitation Rejected!", Toast.LENGTH_SHORT).show();
                         finish();
                     }

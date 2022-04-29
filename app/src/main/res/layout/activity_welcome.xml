@@ -27,13 +27,13 @@
         android:layout_marginStart="12dp"
         android:src="@drawable/ic_close"
         android:scaleType="centerCrop"
-        android:tint="@color/colorIconLight"
         android:contentDescription="@string/app_name"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/colorIconLight" />
 
     <ImageView
         android:id="@+id/app_logo"

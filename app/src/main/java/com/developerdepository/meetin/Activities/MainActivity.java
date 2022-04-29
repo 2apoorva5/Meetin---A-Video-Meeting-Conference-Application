@@ -1,22 +1,16 @@
 package com.developerdepository.meetin.Activities;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.developerdepository.meetin.Adapters.UserAdapter;
+import com.developerdepository.meetin.Helper.LoadingDialog;
 import com.developerdepository.meetin.Listeners.UsersListener;
 import com.developerdepository.meetin.Models.User;
 import com.developerdepository.meetin.R;
@@ -38,13 +33,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
-import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
-
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import dmax.dialog.SpotsDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import maes.tech.intentanim.CustomIntent;
 
 public class MainActivity extends AppCompatActivity implements UsersListener {
@@ -73,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
     private PreferenceManager preferenceManager;
     private List<User> users;
     private UserAdapter userAdapter;
-    private AlertDialog progressDialog;
+    private LoadingDialog loadingDialog;
 
     private int REQUEST_CODE_BATTERY_OPTIMIZATIONS = 123;
 
@@ -92,11 +84,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
             finish();
         }
 
-        progressDialog = new SpotsDialog.Builder().setContext(MainActivity.this)
-                .setMessage("Signing out...")
-                .setCancelable(false)
-                .setTheme(R.style.SpotsDialog)
-                .build();
+        loadingDialog = new LoadingDialog(MainActivity.this);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getColor(R.color.colorPrimary));
@@ -105,11 +93,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
         initFirebase();
         setActionOnViews();
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult() != null) {
-                sendFCMTokenToDatabase(task.getResult().getToken());
-            }
-        });
+        sendFCMTokenToDatabase();
 
         users = new ArrayList<>();
         userAdapter = new UserAdapter(users, this);
@@ -187,15 +171,26 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
         }
     }
 
-    private void sendFCMTokenToDatabase(String token) {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = firebaseFirestore.collection(Constants.KEY_COLLECTION_USERS)
-                .document(preferenceManager.getString(Constants.KEY_EMAIL));
+    private void sendFCMTokenToDatabase() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String refreshToken = task.getResult();
+                        HashMap<String, Object> token = new HashMap<>();
+                        token.put(Constants.KEY_FCM_TOKEN, refreshToken);
 
-        documentReference.update(Constants.KEY_FCM_TOKEN, token)
-                .addOnSuccessListener(aVoid -> {
-                })
-                .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Some ERROR occurred!", Toast.LENGTH_SHORT).show());
+                        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                        DocumentReference documentReference = firebaseFirestore.collection(Constants.KEY_COLLECTION_USERS)
+                                .document(preferenceManager.getString(Constants.KEY_EMAIL));
+
+                        documentReference.set(token, SetOptions.merge())
+                                .addOnSuccessListener(aVoid -> {
+                                })
+                                .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Some ERROR occurred!", Toast.LENGTH_SHORT).show());
+                    } else {
+                        Toast.makeText(MainActivity.this, "Some ERROR occurred!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void getUsers() {
@@ -276,11 +271,11 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
 
     @Override
     public void initiateVideoMeeting(User user) {
-        if(!isConnectedToInternet(MainActivity.this)) {
+        if (!isConnectedToInternet(MainActivity.this)) {
             showConnectToInternetDialog();
             return;
         } else {
-            if(user.FCMToken != null && !user.FCMToken.trim().isEmpty()) {
+            if (user.FCMToken != null && !user.FCMToken.trim().isEmpty()) {
                 Intent intent = new Intent(MainActivity.this, OutgoingInvitationActivity.class);
                 intent.putExtra("user", user);
                 intent.putExtra("type", "video");
@@ -305,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
 
     @Override
     public void initiateAudioMeeting(User user) {
-        if(!isConnectedToInternet(MainActivity.this)) {
+        if (!isConnectedToInternet(MainActivity.this)) {
             showConnectToInternetDialog();
             return;
         } else {
@@ -334,10 +329,10 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
 
     @Override
     public void onMultipleUsersAction(Boolean isMultipleUsersSelected) {
-        if(isMultipleUsersSelected) {
+        if (isMultipleUsersSelected) {
             conferenceBtn.setVisibility(View.VISIBLE);
             conferenceBtn.setOnClickListener(view -> {
-                if(!isConnectedToInternet(MainActivity.this)) {
+                if (!isConnectedToInternet(MainActivity.this)) {
                     showConnectToInternetDialog();
                     return;
                 } else {
@@ -361,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
                 .setCancelable(false)
                 .setPositiveButton("Yes", R.drawable.ic_dialog_yes, (dialogInterface, which) -> {
                     dialogInterface.dismiss();
-                    progressDialog.show();
+                    loadingDialog.startDialog();
                     DocumentReference documentReference = firebaseFirestore.collection(Constants.KEY_COLLECTION_USERS)
                             .document(preferenceManager.getString(Constants.KEY_EMAIL));
 
@@ -369,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
                     updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
                     documentReference.update(updates)
                             .addOnSuccessListener(aVoid -> {
-                                progressDialog.dismiss();
+                                loadingDialog.dismissDialog();
                                 firebaseAuth.signOut();
                                 preferenceManager.clearPreferences();
                                 Toast.makeText(MainActivity.this, "Signed Out!", Toast.LENGTH_SHORT).show();
@@ -378,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
                                 finish();
                             })
                             .addOnFailureListener(e -> {
-                                progressDialog.dismiss();
+                                loadingDialog.dismissDialog();
 
                                 Alerter.create(MainActivity.this)
                                         .setText("Whoa! Unable to sign out. Try Again!")
@@ -400,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
 
     private void checkForBatteryOptimizations() {
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        if(!powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
+        if (!powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
             MaterialDialog materialDialog = new MaterialDialog.Builder(MainActivity.this)
                     .setTitle("WARNING!")
                     .setMessage("Battery optimization is enabled. It can interrupt running background services for Meetin'. Disabling it will do the trick!")
@@ -418,18 +413,19 @@ public class MainActivity extends AppCompatActivity implements UsersListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_BATTERY_OPTIMIZATIONS) {
+        if (requestCode == REQUEST_CODE_BATTERY_OPTIMIZATIONS) {
             checkForBatteryOptimizations();
         }
     }
 
     private boolean isConnectedToInternet(MainActivity mainActivity) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+        if (null != networkInfo &&
+                (networkInfo.getType() == ConnectivityManager.TYPE_WIFI || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE)) {
             return true;
         } else {
             return false;

@@ -1,5 +1,6 @@
 package com.developerdepository.meetin.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -24,12 +25,12 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.developerdepository.meetin.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.tapadoo.alerter.Alerter;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import maes.tech.intentanim.CustomIntent;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -91,7 +92,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             final String email = emailField.getEditText().getText().toString().trim();
 
-            if(!email.isEmpty()) {
+            if (!email.isEmpty()) {
                 forgotPasswordProgressBar.setVisibility(View.INVISIBLE);
                 sendBtnContainer.setVisibility(View.VISIBLE);
                 sendBtn.setEnabled(true);
@@ -273,12 +274,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     };
 
     private boolean isConnectedToInternet(ForgotPasswordActivity forgotPasswordActivity) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) forgotPasswordActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) forgotPasswordActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+        if (null != networkInfo &&
+                (networkInfo.getType() == ConnectivityManager.TYPE_WIFI || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE)) {
             return true;
         } else {
             return false;

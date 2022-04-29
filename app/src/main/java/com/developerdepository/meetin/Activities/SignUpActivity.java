@@ -1,5 +1,6 @@
 package com.developerdepository.meetin.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -28,7 +29,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.tapadoo.alerter.Alerter;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -36,6 +36,7 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.regex.Pattern;
 
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import maes.tech.intentanim.CustomIntent;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -397,12 +398,13 @@ public class SignUpActivity extends AppCompatActivity {
     };
 
     private boolean isConnectedToInternet(SignUpActivity signUpActivity) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) signUpActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) signUpActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+        if (null != networkInfo &&
+                (networkInfo.getType() == ConnectivityManager.TYPE_WIFI || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE)) {
             return true;
         } else {
             return false;
